@@ -1,9 +1,9 @@
 
-import pyautogui
 import random
 import math
 import time
 
+from resources.mouse import MouseClick
 from random import randint
 
 #Go to a world with few people
@@ -15,8 +15,8 @@ from random import randint
 o
 '''
 
-runs = randint(110, 120) # 4.06-4.87 hours
-pyautogui.PAUSE = 0.01
+runs = randint(30, 35) # 1.22-1.42 hours
+# runs = randint(110, 120) # 4.2-5.2 hours
 
 time.sleep(2.5)
 
@@ -27,107 +27,46 @@ try:
 		#Mine irons until inv full (27)
 		while iron_cycles<9: # about 13.5 sec per iteration
 			#Bottom left iron
-			mousex = randint(804,813)
-			mousey = randint(582, 588)
-			pyautogui.moveTo(mousex, mousey)
-			time.sleep(random.uniform(0.1, 0.2))
-		
-			pyautogui.mouseDown()		
-			time.sleep(random.uniform(0.08, 0.2))		
-			pyautogui.mouseUp()
-		
-			time.sleep(random.uniform(3.85, 3.95))
+			MouseClick.left_click(804, 813, 582, 588)
+			time.sleep(random.uniform(3.75, 4.05))
 			
 			#Middle iron
-			mousex = randint(957,963)
-			mousey = randint(489, 494)
-			pyautogui.moveTo(mousex, mousey)
-			time.sleep(random.uniform(0.1, 0.2))
-		
-			pyautogui.mouseDown()		
-			time.sleep(random.uniform(0.08, 0.2))		
-			pyautogui.mouseUp()
-		
-			time.sleep(random.uniform(3.6, 3.7))
+			MouseClick.left_click(957, 963, 489, 494)
+			time.sleep(random.uniform(3.5, 3.8))
 			
 			#Top right iron
-			mousex = randint(1064,1071)
-			mousey = randint(434, 439)
-			pyautogui.moveTo(mousex, mousey)
-			time.sleep(random.uniform(0.1, 0.2))
-		
-			pyautogui.mouseDown()		
-			time.sleep(random.uniform(0.08, 0.2))		
-			pyautogui.mouseUp()
-		
-			time.sleep(random.uniform(5.1, 5.4))
+			MouseClick.left_click(1064, 1071, 434, 439)
+			time.sleep(random.uniform(4.9, 5.4))
+			
+			if random.uniform(0,13)>12:
+				time.sleep(random.uniform(20,40))
 			
 			iron_cycles += 1
 		
 		#Enter dungeon to bank (you will be standing at starting location)
-		mousex = randint(604,627)
-		mousey = randint(730, 753)
-		pyautogui.moveTo(mousex, mousey)
-		time.sleep(random.uniform(0.1, 0.2))
-		
-		pyautogui.mouseDown()
-		time.sleep(random.uniform(0.08, 0.2))		
-		pyautogui.mouseUp()	
-		
+		MouseClick.left_click(604, 627, 730, 753)
 		if random.uniform(0,14) > 13:
-			time.sleep((2.0+abs(random.uniform(0,1)-random.uniform(0,1)))*random.uniform(6,8))
+			time.sleep((2.0+abs(random.uniform(0,1)-random.uniform(0,1)))*random.uniform(10,13))
 		else:
-			time.sleep(random.uniform(6.45, 6.65))
+			time.sleep((2.0+abs(random.uniform(0,1)-random.uniform(0,1)))*random.uniform(4,4.5))
 		
 		#Click Deposit Box
-		mousex = randint(1005,1017)
-		mousey = randint(392, 401)
-		pyautogui.moveTo(mousex, mousey)
-		time.sleep(random.uniform(0.1, 0.2))
-		
-		pyautogui.mouseDown()		
-		time.sleep(random.uniform(0.08, 0.2))		
-		pyautogui.mouseUp()	
-		
-		time.sleep(random.uniform(2.5, 2.65))
+		MouseClick.left_click(1005, 1017, 392, 401)
+		time.sleep(random.uniform(4.75, 5.25))
 		
 		#Deposit inventory
-		mousex = randint(1004,1016)
-		mousey = randint(631, 641)
-		pyautogui.moveTo(mousex, mousey)
-		time.sleep(random.uniform(0.1, 0.2))
-		
-		pyautogui.mouseDown()		
-		time.sleep(random.uniform(0.08, 0.2))		
-		pyautogui.mouseUp()	
-		
-		time.sleep(random.uniform(1.45, 1.55))
+		MouseClick.left_click(1004, 1016, 631, 641)
+		time.sleep(random.uniform(1.8, 2))
 		
 		#Exit
-		mousex = randint(788,800)
-		mousey = randint(705, 709)
-		pyautogui.moveTo(mousex, mousey)
-		time.sleep(random.uniform(0.1, 0.2))
-		
-		pyautogui.mouseDown()		
-		time.sleep(random.uniform(0.08, 0.2))		
-		pyautogui.mouseUp()	
-		
+		MouseClick.left_click(788, 800, 705, 709)
 		if random.uniform(0,10) > 9:
-			time.sleep(random.uniform(7, 12))
+			time.sleep(random.uniform(10, 15))
 		else:
-			time.sleep((2.0+abs(random.uniform(0,1)-random.uniform(0,1)))*random.uniform(2.0,2.1))
+			time.sleep((2.0+abs(random.uniform(0,1)-random.uniform(0,1)))*random.uniform(2.4,2.5))
 		
 		#Click top right iron and re-loop
-		mousex = randint(1202,1210)
-		mousey = randint(304, 309)
-		pyautogui.moveTo(mousex, mousey)
-		time.sleep(random.uniform(0.1, 0.2))
-		
-		pyautogui.mouseDown()		
-		time.sleep(random.uniform(0.08, 0.2))		
-		pyautogui.mouseUp()	
-		
+		MouseClick.left_click(1202, 1210, 304, 309)
 		time.sleep(random.uniform(5.1, 5.8))
 		
 		runs -= 1

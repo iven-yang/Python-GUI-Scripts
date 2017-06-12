@@ -1,29 +1,20 @@
 
-import pyautogui
 import random
 import time
 
+from resources.mouse import MouseClick
 from random import randint
 
 #Face north. zoom all the way out, with camera at highest angle possible
 #Play the harp from the left
 
-runs = randint(335,345) # around 5.2 hours
-pyautogui.PAUSE = 0.01
+runs = randint(300,315) # around 5 hours
 
 time.sleep(2.5)
 
 try:
 	while runs>0:
-		mousex = randint(893, 927)
-		mousey = randint(520, 546)
-		pyautogui.moveTo(mousex, mousey)
-		time.sleep(random.uniform(0.1, 0.2))
-		
-		pyautogui.mouseDown()
-		time.sleep(random.uniform(0.08, 0.2))
-		pyautogui.mouseUp()
-		
+		MouseClick.left_click(893, 927, 520, 546)
 		time.sleep(random.uniform(45, 65))
 		
 		runs -= 1
