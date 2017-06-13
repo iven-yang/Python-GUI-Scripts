@@ -6,25 +6,25 @@ import time
 from resources.mouse import MouseClick
 from random import randint
 
-#Have at least 82,500 each of feathers and shafts
-#Put shafts in very top left of inventory
+# Have at least 82,500 each of feathers and shafts
+# Put shafts in very top left of inventory, feathers in second slot
+# Leave third and fourth inventory slot empty (headless shafts made will go in third slot)
 
 runs = randint(200, 225) # 1-1.15 hours
 
 time.sleep(2.5)
 
 try:
-	while runs>0: # about 17.5 sec per iteration
-		#Very Upper Left Inv Slot
+	while runs>0: # About 17.5 sec per iteration
+		# Very Upper Left Inv Slot
 		MouseClick.left_click(1734, 1742, 735, 748)
 		time.sleep(random.uniform(2.1, 2.3))
 		
-		#Button to Start Fletching
+		# Button to Start Fletching
 		MouseClick.left_click(1024, 1112, 670, 685)
-		
-		#Rando Stuff
 		time.sleep((4.0+abs(random.uniform(0,1)-random.uniform(0,1)))*random.uniform(1.65,1.75))
 		
+		# Random Stuff
 		if random.uniform(0,9) > 8:
 			MouseClick.left_click(1505, 1516, 1015, 1025)
 			time.sleep(random.uniform(2,4))

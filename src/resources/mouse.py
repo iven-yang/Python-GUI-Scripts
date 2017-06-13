@@ -13,6 +13,7 @@ class MouseClick:
 	
 	@classmethod
 	def left_click(cls, x1: int, x2: int, y1: int, y2: int):
+		pyautogui.PAUSE = 0
 		mousex = randint(x1, x2)
 		mousey = randint(y1, y2)
 		pyautogui.moveTo(mousex, mousey)
