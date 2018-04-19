@@ -16,8 +16,8 @@ from random import randint
 o
 '''
 
-runs = randint(30, 35) # 1.22-1.42 hours
-# runs = randint(110, 120) # 4.2-5.2 hours
+runs = randint(30, 35) # 1.25-1.46 hours
+# runs = randint(50, 55) # 2.08-2.29 hours
 
 time.sleep(2.5)
 
@@ -39,30 +39,45 @@ chat_options = [
 	'this is gey',
 	'i hate mining',
 	'kek',
-	'how do ppl max mining lol'
+	'how do ppl max mining lol',
+	'time to stick my hard pickaxe in this rocks crack',
+	'just keep mining just keep mining',
+	'if i had 1 dollar for every iron ore ive mined i would have at least 10 dollars',
+	'i like men',
+	'fuk u geodude',
+	'i love talking to myself',
+	'im lonely'
 ]
 
 try:
-	while runs>0: # About 146 sec per iteration
+	while runs>0: # About 150 sec per iteration
 		iron_cycles = 0
 		
 		# Mine irons until inv full (27)
-		while iron_cycles<8: # About 13.5 sec per iteration
+		while iron_cycles<8: # About 15 sec per iteration
 			# Bottom left iron
 			MouseClick.left_click(804, 813, 582, 588)
-			time.sleep(random.uniform(3.75, 4.05))
+			time.sleep(random.uniform(3.9, 4.25))
 			
 			# Middle iron
 			MouseClick.left_click(957, 963, 489, 494)
-			time.sleep(random.uniform(3.5, 3.8))
+			time.sleep(random.uniform(3.8, 4.15))
 			
 			# Top right iron
 			MouseClick.left_click(1064, 1071, 434, 439)
-			time.sleep(random.uniform(4.9, 5.4))
+			time.sleep(random.uniform(5.1, 5.45))
 			
 			if random.uniform(0,16)>15:
 				option = randint(0, len(chat_options)-1)
-				Keyboard.chat(chat_options[option])
+				block = chat_options[option]
+				
+				if random.uniform(0,5) > 4:
+					block = 'wave2:%s' % block
+				if random.uniform(0,5) > 4:
+					block = 'flash2:%s' % block
+				
+				Keyboard.chat(block)
+				
 				time.sleep(random.uniform(2,4))
 			
 			iron_cycles += 1
@@ -72,11 +87,11 @@ try:
 		if random.uniform(0,14) > 13:
 			time.sleep((2.0+abs(random.uniform(0,1)-random.uniform(0,1)))*random.uniform(10,13))
 		else:
-			time.sleep((2.0+abs(random.uniform(0,1)-random.uniform(0,1)))*random.uniform(4,4.5))
+			time.sleep((2.0+random.uniform(0,1)*random.uniform(0,1))*5)
 		
 		# Click Deposit Box
 		MouseClick.left_click(1005, 1017, 392, 401)
-		time.sleep(random.uniform(4.75, 5.25))
+		time.sleep(random.uniform(5, 5.35))
 		
 		# Deposit inventory
 		MouseClick.left_click(1004, 1016, 631, 641)
@@ -87,11 +102,11 @@ try:
 		if random.uniform(0,10) > 9:
 			time.sleep(random.uniform(10, 15))
 		else:
-			time.sleep((2.0+abs(random.uniform(0,1)-random.uniform(0,1)))*random.uniform(2.4,2.5))
+			time.sleep((2.0+random.uniform(0,1)*random.uniform(0,1))*4.5)
 		
 		# Click top right iron and re-loop
 		MouseClick.left_click(1202, 1210, 304, 309)
-		time.sleep(random.uniform(5.1, 5.8))
+		time.sleep(random.uniform(6.4, 6.75))
 		
 		runs -= 1
 		

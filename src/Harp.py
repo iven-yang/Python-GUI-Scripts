@@ -7,7 +7,7 @@ from random import randint
 
 # Face north. zoom all the way out, with camera at highest angle possible
 # Play the harp from the left
-# Leave first inventory slot empty
+# Leave first inventory slot empty (have harmonic dust somewhere else)
 
 runs = randint(300,315) # Around 5 hours
 
@@ -33,6 +33,7 @@ try:
 			MouseClick.left_click(1567, 1576, 1015, 1025)
 			time.sleep(random.uniform(5.1,6))
 		
+		# Click where key token would be if one spawned
 		if random.uniform(0,15) > 14:
 			MouseClick.left_click(1732, 1745, 739, 745)
 			time.sleep(random.uniform(1.1, 1.3))

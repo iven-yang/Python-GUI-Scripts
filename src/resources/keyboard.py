@@ -10,7 +10,11 @@ class Keyboard:
 	@classmethod
 	def __init__(cls):
 		pyautogui.PAUSE = 0
-	
+
+	@classmethod
+	def press(cls, key: str):
+		pyautogui.press(key)
+
 	@classmethod
 	def push(cls, key: str):
 		pyautogui.PAUSE = 0
