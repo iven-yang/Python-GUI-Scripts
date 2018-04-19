@@ -233,6 +233,7 @@ def play_again():
     level_up_ok_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'level_up_ok.png'))
     if level_up_ok_button is not None:
         MouseClick.left_click(level_up_ok_button[0], level_up_ok_button[0], level_up_ok_button[1], level_up_ok_button[1])
+        time.sleep(2)
     
     # click play again
     timeout = datetime.now() + timedelta(seconds=30)
@@ -281,9 +282,7 @@ def champ_select(accept_button):
         ww_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'warwick.png'))
         if ww_button is not None:
             MouseClick.left_click(ww_button[0], ww_button[0], ww_button[1], ww_button[1])
-            time.sleep(0.5)
-            MouseClick.left_click(ww_button[0], ww_button[0], ww_button[1], ww_button[1])
-            time.sleep(0.5)
+            time.sleep(2)
             MouseClick.left_click(ww_button[0], ww_button[0], ww_button[1], ww_button[1])
             time.sleep(1)
             
