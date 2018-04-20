@@ -26,14 +26,13 @@ Minimap 100
 """
 Known Issues:
 
-Someone dodges during champ select
 
 """
 
 images_folder = r'C:\Users\risin\Desktop\DefNotBottin\Python-GUI-Scripts\src\resources\LoL_images'
 
 def recall():
-    print('recalling')
+    print('%s recalling' % datetime.now().strftime('%I:%M:%S'))
     MouseClick.left_click(1235, 1245, 1023, 1036)
     time.sleep(1)
     MouseClick.left_click(1235, 1245, 1023, 1036)
@@ -41,7 +40,7 @@ def recall():
 
 def begin_game_shop():
     recall()
-    print('starting items')
+    print('%s starting items' % datetime.now().strftime('%I:%M:%S'))
     # open shop
     MouseClick.left_click(825, 925, 175, 250)
     time.sleep(random.uniform(0.75, 1.0))
@@ -60,7 +59,7 @@ def begin_game_shop():
     
 def shop():
     recall()
-    print('shopping')
+    print('%s shopping' % datetime.now().strftime('%I:%M:%S'))
     # open shop
     MouseClick.left_click(825, 925, 175, 250)
     time.sleep(random.uniform(0.75, 1.0))
@@ -100,7 +99,7 @@ def fishlevelups():
     time.sleep(random.uniform(0.5, 0.75))
     
 def redbuff(slp: int):
-    print('doing red')
+    print('%s doing red' % datetime.now().strftime('%I:%M:%S'))
     MouseClick.left_click(1790, 1790, 1000, 1000)
     time.sleep(random.uniform(0.25, 0.75))
     MouseClick.right_click(1790, 1790, 1000, 1000)
@@ -109,7 +108,7 @@ def redbuff(slp: int):
     MouseClick.right_click(860, 900, 450, 500)
 
 def bluebuff(slp: int):
-    print('doing blue')
+    print('%s doing blue' % datetime.now().strftime('%I:%M:%S'))
     MouseClick.left_click(1720, 1720, 930, 930)
     time.sleep(random.uniform(0.25, 0.75))
     MouseClick.right_click(1720, 1720, 930, 930)
@@ -118,7 +117,7 @@ def bluebuff(slp: int):
     MouseClick.right_click(930, 1000, 535, 585)
 
 def gromp(slp: int):
-    print('doing gromp')
+    print('%s doing gromp' % datetime.now().strftime('%I:%M:%S'))
     MouseClick.left_click(1693, 1693, 923, 923)
     time.sleep(random.uniform(0.25, 0.75))
     MouseClick.right_click(1693, 1693, 923, 923)
@@ -127,7 +126,7 @@ def gromp(slp: int):
     MouseClick.right_click(740, 810, 475, 520)
 
 def golems(slp: int):
-    print('doing golems')
+    print('%s doing golems' % datetime.now().strftime('%I:%M:%S'))
     MouseClick.left_click(1800, 1800, 1023, 1023)
     time.sleep(random.uniform(0.25, 0.75))
     MouseClick.right_click(1800, 1800, 1023, 1023)
@@ -136,7 +135,7 @@ def golems(slp: int):
     MouseClick.right_click(970, 1000, 450, 490)
 
 def wolves(slp: int):
-    print('doing wolves')
+    print('%s doing wolves' % datetime.now().strftime('%I:%M:%S'))
     MouseClick.left_click(1718, 1718, 957, 957)
     time.sleep(random.uniform(0.25, 0.75))
     MouseClick.right_click(1718, 1718, 957, 957)
@@ -145,7 +144,7 @@ def wolves(slp: int):
     MouseClick.right_click(970, 1000, 550, 570)
     
 def chickens(slp: int):
-    print('doing chickens')
+    print('%s doing chickens' % datetime.now().strftime('%I:%M:%S'))
     MouseClick.left_click(1776, 1776, 978, 978)
     time.sleep(random.uniform(0.25, 0.75))
     MouseClick.right_click(1776, 1776, 978, 978)
@@ -157,80 +156,68 @@ def play():
     timeout = datetime.now() + timedelta(seconds=3600) # 60 min
 
     fishlevelups()
-    redbuff(70)
-    time.sleep(random.uniform(30, 35))
+    redbuff(69)
+    time.sleep(random.uniform(25, 30))
     fishlevelups()
 
     while timeout > datetime.now():
-        bluebuff(35)
-        time.sleep(random.uniform(25, 30))
+        bluebuff(27)
+        if check_post_game(random.uniform(25, 30)): break # keep checking if the game has ended during the 25-30 sec you are doing blue
         fishlevelups()
-        if check_post_game():
-            break
         
-        gromp(10)
-        time.sleep(random.uniform(25, 30))
+        gromp(7)
+        if check_post_game(random.uniform(23, 25)): break
         fishlevelups()
-        if check_post_game():
-            break
         
-        golems(40)
-        time.sleep(random.uniform(50, 55))
+        golems(34)
+        if check_post_game(random.uniform(39, 44)): break
         fishlevelups()
-        if check_post_game():
-            break
         
-        wolves(31)
-        time.sleep(random.uniform(25, 30))
+        wolves(28)
+        if check_post_game(random.uniform(20, 25)): break
         fishlevelups()
-        if check_post_game():
-            break
         
-        chickens(25)
-        time.sleep(random.uniform(30, 35))
+        chickens(20)
+        if check_post_game(random.uniform(29, 34)): break
         fishlevelups()
-        if check_post_game():
-            break
         
         shop()
-        time.sleep(random.uniform(5, 10))
-        if check_post_game():
-            break
+        if check_post_game(): break
         
-        redbuff(35)
-        time.sleep(random.uniform(25, 30))
+        redbuff(30)
+        if check_post_game(random.uniform(18, 23)): break
         fishlevelups()
-        if check_post_game():
-            break
     else:
-        print('game timeout (60 min co-op ai game?!)')
+        print('%s game timeout (60 min co-op ai game?!)' % datetime.now().strftime('%I:%M:%S'))
         exit(0)
-    print('Game Ended')
+    print('%s Game Ended' % datetime.now().strftime('%I:%M:%S'))
     print('')
 
-def check_post_game() -> bool:
-    skip_honor_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'skip_honor.png'))
-    if skip_honor_button is not None:
-        time.sleep(0.5)
-        MouseClick.left_click(skip_honor_button[0], skip_honor_button[0], skip_honor_button[1], skip_honor_button[1])
-        return True
-    else:
-        play_again_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'x_left_of_play_again.png')) # Using the actual play again button seems inconsistent
-        if play_again_button is not None:
+def check_post_game(check_time=3) -> bool:
+    pyautogui.moveTo(100, 100) # move mouse so button won't be covered
+    
+    timeout = datetime.now() + timedelta(seconds=check_time)
+    while timeout > datetime.now():
+        recall_button = pyautogui.locateOnScreen(os.path.join(images_folder, 'recall.png'), region=(1200, 985, 100, 100))
+        if recall_button is None:
             return True
-        else:
-            pyautogui.moveTo(10, 10) # move mouse so level up ok button won't be covered
-            level_up_ok_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'level_up_ok.png')) # check for level up ok button
-            if level_up_ok_button is not None:
-                return True
+        time.sleep(1)
     return False
 
 def play_again():
-    pyautogui.moveTo(10, 10) # move mouse so level up ok button won't be covered
-    time.sleep(5)
+    pyautogui.moveTo(100, 100) # move mouse so buttons won't be covered
+    
+    timeout = datetime.now() + timedelta(seconds=30)
+    while timeout > datetime.now():
+        skip_honor_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'skip_honor.png'))
+        if skip_honor_button is not None:
+            time.sleep(1)
+            MouseClick.left_click(skip_honor_button[0], skip_honor_button[0], skip_honor_button[1], skip_honor_button[1])
+            time.sleep(5)
+    
     level_up_ok_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'level_up_ok.png'))
     if level_up_ok_button is not None:
-        print('Level Up!')
+        print('%s Level Up!' % datetime.now().strftime('%I:%M:%S'))
         MouseClick.left_click(level_up_ok_button[0], level_up_ok_button[0], level_up_ok_button[1], level_up_ok_button[1])
         time.sleep(2)
     
@@ -244,50 +231,52 @@ def play_again():
             time.sleep(5)
             break
     else:
-        print('could not find the play again button')
+        print('%s could not find the play again button' % datetime.now().strftime('%I:%M:%S'))
         exit(0)
 
 def find_match():
     print('finding match')
+    client_top_left = None
     
     timeout = datetime.now() + timedelta(seconds=10)
     while timeout > datetime.now():
         find_match_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'x_left_of_find_match.png')) # Using the actual find match button seems inconsistent
         if find_match_button is not None:
+            client_top_left = (find_match_button[0] - 445, find_match_button[1] - 685)
             MouseClick.left_click(find_match_button[0] + 50, find_match_button[0] + 100, find_match_button[1], find_match_button[1])
             break
     else:
-        print('could not find the find match button')
+        print('%s could not find the find match button' % datetime.now().strftime('%I:%M:%S'))
         exit(0)
     
     # Queue up with queue time limit of 5 min
     timeout = datetime.now() + timedelta(seconds=300) # 5 min
     while timeout > datetime.now():
-        accept_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'accept.png'))
+        accept_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'accept.png'), region=(client_top_left[0] + 450, client_top_left[1] + 450, 400, 300))
         if accept_button is not None:
             MouseClick.left_click(accept_button[0], accept_button[0], accept_button[1], accept_button[1])
             time.sleep(1)
-            return accept_button # someone might decline the queue, just keep clicking in same spot
+            return accept_button, client_top_left # someone might decline the queue, just keep clicking in same spot
     else:
-        print('queue timed out')
+        print('%s queue timed out' % datetime.now().strftime('%I:%M:%S'))
         exit(0)
     
-def champ_select(accept_button):
+def champ_select(accept_button, client_top_left):
     print('champ select')
     # Click Warwick
     timeout = datetime.now() + timedelta(seconds=360) # 6 min
     while timeout > datetime.now():
-        ww_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'warwick.png'))
+        ww_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'warwick.png'), region=(client_top_left[0] + 340, client_top_left[1] + 130, 600, 450))
         if ww_button is not None:
             MouseClick.left_click(ww_button[0], ww_button[0], ww_button[1], ww_button[1])
             time.sleep(2)
             MouseClick.left_click(ww_button[0], ww_button[0], ww_button[1], ww_button[1])
             time.sleep(1)
             
-            lock_in = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'lock_in.png'))
+            lock_in = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'lock_in.png'), region=(client_top_left[0] + 530, client_top_left[1] + 550, 200, 100))
             if lock_in is None:
-                print('could not lock in warwick')
-                exit(0)
+                print('%s could not lock in warwick' % datetime.now().strftime('%I:%M:%S'))
+                break
             
             MouseClick.left_click(lock_in[0], lock_in[0], lock_in[1], lock_in[1])
             time.sleep(1)
@@ -297,43 +286,44 @@ def champ_select(accept_button):
         else:
             MouseClick.left_click(accept_button[0], accept_button[0], accept_button[1], accept_button[1]) # someone might decline the queue, just keep clicking in same spot
     else:
-        print('could not lock in warwick - timeout')
+        print('%s could not lock in warwick - timeout' % datetime.now().strftime('%I:%M:%S'))
         exit(0)
     
     # wait for game start - check for other people dodging
+    pyautogui.moveTo(100, 100) # move mouse so accept queue button won't be covered
     timeout = datetime.now() + timedelta(seconds=600) # 10 min load time
     while timeout > datetime.now():
-        recall_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'recall.png'))
+        recall_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'recall.png'), region=(1200, 985, 100, 100))
         if recall_button is not None:
-            print('game start')
+            print('%s game start' % datetime.now().strftime('%I:%M:%S'))
             time.sleep(3)
             begin_game_shop() # buy starting items
             break
         else:
             # check for a dodge
-            accept_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'accept.png'))
+            accept_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'accept.png'), region=(client_top_left[0] + 450, client_top_left[1] + 450, 400, 300))
             if accept_button is not None:
-                print('someone dodged')
+                print('%s someone dodged, accepted new game' % datetime.now().strftime('%I:%M:%S'))
                 MouseClick.left_click(accept_button[0], accept_button[0], accept_button[1], accept_button[1])
                 time.sleep(1)
                 champ_select(accept_button)
                 break
     else:
-        print('loading timeout')
+        print('%s loading timeout' % datetime.now().strftime('%I:%M:%S'))
         exit(0)
     
 # --------------- MAIN ---------------
 try:
-    print('starting script')
+    print('%s starting script' % datetime.now().strftime('%I:%M:%S'))
     timeout = datetime.now() + timedelta(seconds=36000) # 10 hours
     
     while timeout > datetime.now():
-        accept_button = find_match()
-        champ_select(accept_button)
+        #accept_button, client_top_left = find_match()
+        #champ_select(accept_button, client_top_left)
         play()
         play_again()
 
 except KeyboardInterrupt:
-    print('Stopped by User')
+    print('%s Stopped by User' % datetime.now().strftime('%I:%M:%S'))
 
-print('10 hours of XP farming complete')
+print('%s 10 hours of XP farming complete' % datetime.now().strftime('%I:%M:%S'))
