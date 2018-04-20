@@ -207,41 +207,44 @@ def check_post_game(check_time=3) -> bool:
 def play_again():
     pyautogui.moveTo(100, 100) # move mouse so buttons won't be covered
     
-    timeout = datetime.now() + timedelta(seconds=30)
+    # skip honor screen
+    timeout = datetime.now() + timedelta(seconds=60)
     while timeout > datetime.now():
         skip_honor_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'skip_honor.png'))
         if skip_honor_button is not None:
-            time.sleep(1)
+            time.sleep(2)
             MouseClick.left_click(skip_honor_button[0], skip_honor_button[0], skip_honor_button[1], skip_honor_button[1])
-            time.sleep(5)
     
-    level_up_ok_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'level_up_ok.png'))
-    if level_up_ok_button is not None:
-        print('%s Level Up!' % datetime.now().strftime('%I:%M:%S'))
-        MouseClick.left_click(level_up_ok_button[0], level_up_ok_button[0], level_up_ok_button[1], level_up_ok_button[1])
-        time.sleep(2)
+    # check to see if level up
+    timeout = datetime.now() + timedelta(seconds=10)
+    while timeout > datetime.now():
+        level_up_ok_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'level_up_ok.png'))
+        if level_up_ok_button is not None:
+            print('%s Level Up!' % datetime.now().strftime('%I:%M:%S'))
+            time.sleep(1)
+            MouseClick.left_click(level_up_ok_button[0], level_up_ok_button[0], level_up_ok_button[1], level_up_ok_button[1])
     
     # click play again
-    timeout = datetime.now() + timedelta(seconds=30)
+    timeout = datetime.now() + timedelta(seconds=10)
     while timeout > datetime.now():
         play_again_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'x_left_of_play_again.png')) # Using the actual play again button seems inconsistent
         if play_again_button is not None:
             time.sleep(1)
             MouseClick.left_click(play_again_button[0] + 50, play_again_button[0] + 100, play_again_button[1], play_again_button[1])
-            time.sleep(5)
             break
     else:
         print('%s could not find the play again button' % datetime.now().strftime('%I:%M:%S'))
         exit(0)
 
 def find_match():
-    print('finding match')
+    print('%s finding match' % datetime.now().strftime('%I:%M:%S'))
     client_top_left = None
     
     timeout = datetime.now() + timedelta(seconds=10)
     while timeout > datetime.now():
         find_match_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'x_left_of_find_match.png')) # Using the actual find match button seems inconsistent
         if find_match_button is not None:
+            time.sleep(1)
             client_top_left = (find_match_button[0] - 445, find_match_button[1] - 685)
             MouseClick.left_click(find_match_button[0] + 50, find_match_button[0] + 100, find_match_button[1], find_match_button[1])
             break
@@ -262,7 +265,7 @@ def find_match():
         exit(0)
     
 def champ_select(accept_button, client_top_left):
-    print('champ select')
+    print('%s champ select' % datetime.now().strftime('%I:%M:%S'))
     # Click Warwick
     timeout = datetime.now() + timedelta(seconds=360) # 6 min
     while timeout > datetime.now():
@@ -306,7 +309,7 @@ def champ_select(accept_button, client_top_left):
                 print('%s someone dodged, accepted new game' % datetime.now().strftime('%I:%M:%S'))
                 MouseClick.left_click(accept_button[0], accept_button[0], accept_button[1], accept_button[1])
                 time.sleep(1)
-                champ_select(accept_button)
+                champ_select(accept_button, client_top_left)
                 break
     else:
         print('%s loading timeout' % datetime.now().strftime('%I:%M:%S'))
@@ -318,8 +321,8 @@ try:
     timeout = datetime.now() + timedelta(seconds=36000) # 10 hours
     
     while timeout > datetime.now():
-        #accept_button, client_top_left = find_match()
-        #champ_select(accept_button, client_top_left)
+        accept_button, client_top_left = find_match()
+        champ_select(accept_button, client_top_left)
         play()
         play_again()
 
