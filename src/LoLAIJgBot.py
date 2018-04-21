@@ -14,22 +14,36 @@ time.sleep(2.5)
 
 chat_options = [
     'lol',
-    'ugh',
-    'kek'
+    'kek',
+    'glhf'
 ]
 """
+Requirements:
 1920x1080 borderless
 HUD 50
 Minimap 100
-"""
+Client must be medium sized (use settings or ctrl + up/down to change size)
+Warwick must be fully visible by default on the champ select screen
+Image resources must be in ./resources/LoL_images
 
-"""
+Notes:
+Don't alt+tab or obstruct the recall button while doing a camp (script checks for it to see if game is over)
+Don't move the client window around
+
 Known Issues:
-
-
 """
 
-images_folder = r'C:\Users\risin\Desktop\DefNotBottin\Python-GUI-Scripts\src\resources\LoL_images'
+images_folder = os.path.join(os.getcwd(), 'resources', 'LoL_images')
+
+# Save a screenshot at time of failure
+def fail_out():
+    failures_folder = os.path.join(os.getcwd(), 'resources', 'Failures')
+    pic = pyautogui.screenshot()
+    pic.save(os.path.join(failures_folder, datetime.now().strftime('%I_%M_%S') + '.png'))
+    print('%s Screenshot at time of failure saved in failures folder' % datetime.now().strftime('%I:%M:%S'))
+    print('%s Mouse Position at time of failure:' % datetime.now().strftime('%I:%M:%S'))
+    print(pyautogui.position())
+    exit(0)
 
 def recall():
     print('%s recalling' % datetime.now().strftime('%I:%M:%S'))
@@ -189,7 +203,7 @@ def play():
         fishlevelups()
     else:
         print('%s game timeout (60 min co-op ai game?!)' % datetime.now().strftime('%I:%M:%S'))
-        exit(0)
+        fail_out()
     print('%s Game Ended' % datetime.now().strftime('%I:%M:%S'))
     print('')
 
@@ -207,14 +221,17 @@ def check_post_game(check_time=3) -> bool:
 def play_again():
     pyautogui.moveTo(100, 100) # move mouse so buttons won't be covered
     
+    print('%s checking for skip honor button' % datetime.now().strftime('%I:%M:%S'))
     # skip honor screen
     timeout = datetime.now() + timedelta(seconds=60)
     while timeout > datetime.now():
         skip_honor_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'skip_honor.png'))
         if skip_honor_button is not None:
+            print('%s clicking skip honor button' % datetime.now().strftime('%I:%M:%S'))
             time.sleep(2)
             MouseClick.left_click(skip_honor_button[0], skip_honor_button[0], skip_honor_button[1], skip_honor_button[1])
     
+    print('%s checking for level up ok button' % datetime.now().strftime('%I:%M:%S'))
     # check to see if level up
     timeout = datetime.now() + timedelta(seconds=10)
     while timeout > datetime.now():
@@ -224,17 +241,19 @@ def play_again():
             time.sleep(1)
             MouseClick.left_click(level_up_ok_button[0], level_up_ok_button[0], level_up_ok_button[1], level_up_ok_button[1])
     
+    print('%s checking for play again button' % datetime.now().strftime('%I:%M:%S'))
     # click play again
     timeout = datetime.now() + timedelta(seconds=10)
     while timeout > datetime.now():
         play_again_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'x_left_of_play_again.png')) # Using the actual play again button seems inconsistent
         if play_again_button is not None:
+            print('%s clicking play again button' % datetime.now().strftime('%I:%M:%S'))
             time.sleep(1)
             MouseClick.left_click(play_again_button[0] + 50, play_again_button[0] + 100, play_again_button[1], play_again_button[1])
             break
     else:
         print('%s could not find the play again button' % datetime.now().strftime('%I:%M:%S'))
-        exit(0)
+        fail_out()
 
 def find_match():
     print('%s finding match' % datetime.now().strftime('%I:%M:%S'))
@@ -250,7 +269,7 @@ def find_match():
             break
     else:
         print('%s could not find the find match button' % datetime.now().strftime('%I:%M:%S'))
-        exit(0)
+        fail_out()
     
     # Queue up with queue time limit of 5 min
     timeout = datetime.now() + timedelta(seconds=300) # 5 min
@@ -262,7 +281,7 @@ def find_match():
             return accept_button, client_top_left # someone might decline the queue, just keep clicking in same spot
     else:
         print('%s queue timed out' % datetime.now().strftime('%I:%M:%S'))
-        exit(0)
+        fail_out()
     
 def champ_select(accept_button, client_top_left):
     print('%s champ select' % datetime.now().strftime('%I:%M:%S'))
@@ -290,7 +309,7 @@ def champ_select(accept_button, client_top_left):
             MouseClick.left_click(accept_button[0], accept_button[0], accept_button[1], accept_button[1]) # someone might decline the queue, just keep clicking in same spot
     else:
         print('%s could not lock in warwick - timeout' % datetime.now().strftime('%I:%M:%S'))
-        exit(0)
+        fail_out()
     
     # wait for game start - check for other people dodging
     pyautogui.moveTo(100, 100) # move mouse so accept queue button won't be covered
@@ -313,8 +332,8 @@ def champ_select(accept_button, client_top_left):
                 break
     else:
         print('%s loading timeout' % datetime.now().strftime('%I:%M:%S'))
-        exit(0)
-    
+        fail_out()
+
 # --------------- MAIN ---------------
 try:
     print('%s starting script' % datetime.now().strftime('%I:%M:%S'))
