@@ -208,14 +208,18 @@ def play():
     print('')
 
 def check_post_game(check_time=3) -> bool:
-    pyautogui.moveTo(100, 100) # move mouse so button won't be covered
-    
     timeout = datetime.now() + timedelta(seconds=check_time)
     while timeout > datetime.now():
-        recall_button = pyautogui.locateOnScreen(os.path.join(images_folder, 'recall.png'), region=(1200, 985, 100, 100))
-        if recall_button is None:
-            return True
+        pyautogui.moveTo(100, 100) # move mouse so button won't be covered
         time.sleep(1)
+        recall_button = pyautogui.locateOnScreen(os.path.join(images_folder, 'recall.png'), region=(1200, 985, 100, 100), grayscale=True)
+        # Also check recall button picture when dead (it's a slightly different picture)
+        if recall_button is None:
+            recall_button = pyautogui.locateOnScreen(os.path.join(images_folder, 'recall_dead.png'), region=(1200, 985, 100, 100), grayscale=True)
+            if recall_button is None:
+                recall_button = pyautogui.locateOnScreen(os.path.join(images_folder, 'recall.png'), region=(1200, 985, 100, 100), grayscale=True)
+                if recall_button is None:
+                    return True
     return False
 
 def play_again():
