@@ -208,9 +208,9 @@ def play():
     print('')
 
 def check_post_game(check_time=3) -> bool:
+    pyautogui.moveTo(100, 100) # move mouse so button won't be covered
     timeout = datetime.now() + timedelta(seconds=check_time)
     while timeout > datetime.now():
-        pyautogui.moveTo(100, 100) # move mouse so button won't be covered
         time.sleep(1)
         recall_button = pyautogui.locateOnScreen(os.path.join(images_folder, 'recall.png'), region=(1200, 985, 100, 100), grayscale=True)
         # Also check recall button picture when dead (it's a slightly different picture)
@@ -232,8 +232,10 @@ def play_again():
         skip_honor_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'skip_honor.png'))
         if skip_honor_button is not None:
             print('%s clicking skip honor button' % datetime.now().strftime('%I:%M:%S'))
-            time.sleep(2)
+            time.sleep(1)
             MouseClick.left_click(skip_honor_button[0], skip_honor_button[0], skip_honor_button[1], skip_honor_button[1])
+            time.sleep(4)
+            break
     
     print('%s checking for level up ok button' % datetime.now().strftime('%I:%M:%S'))
     # check to see if level up
@@ -244,6 +246,8 @@ def play_again():
             print('%s Level Up!' % datetime.now().strftime('%I:%M:%S'))
             time.sleep(1)
             MouseClick.left_click(level_up_ok_button[0], level_up_ok_button[0], level_up_ok_button[1], level_up_ok_button[1])
+            time.sleep(4)
+            break
     
     print('%s checking for play again button' % datetime.now().strftime('%I:%M:%S'))
     # click play again
@@ -254,6 +258,7 @@ def play_again():
             print('%s clicking play again button' % datetime.now().strftime('%I:%M:%S'))
             time.sleep(1)
             MouseClick.left_click(play_again_button[0] + 50, play_again_button[0] + 100, play_again_button[1], play_again_button[1])
+            time.sleep(4)
             break
     else:
         print('%s could not find the play again button' % datetime.now().strftime('%I:%M:%S'))
