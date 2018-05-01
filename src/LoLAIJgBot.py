@@ -9,6 +9,7 @@ from resources.mouse import MouseClick
 from resources.keyboard import Keyboard
 from random import randint
 from datetime import datetime, timedelta
+from typing import Optional
 
 time.sleep(2.5)
 
@@ -34,6 +35,14 @@ Known Issues:
 """
 
 images_folder = os.path.join(os.getcwd(), 'resources', 'LoL_images')
+
+# Mouse scrolling
+def mouse_scroll(value: int, x: Optional[int] = None, y: Optional[int] = None):
+        if x and y:
+            MouseClick.left_click(x, x, y, y)
+
+        pyautogui.scroll(value)
+        # win32api.mouse_event(win32con.MOUSEEVENTF_WHEEL, x, y, value, 0)
 
 # Save a screenshot at time of failure
 def fail_out():
@@ -295,7 +304,11 @@ def find_match():
     
 def champ_select(accept_button, client_top_left):
     print('%s champ select' % datetime.now().strftime('%I:%M:%S'))
-    # Click Warwick
+    
+    # Scroll down to find warwick
+    mouse_scroll(-300, x=client_top_left[0]+600, y=client_top_left[0]+200)
+    
+    # Click Warwick    
     timeout = datetime.now() + timedelta(seconds=360) # 6 min
     while timeout > datetime.now():
         ww_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'warwick.png'), region=(client_top_left[0] + 340, client_top_left[1] + 130, 600, 450))
@@ -344,7 +357,6 @@ def champ_select(accept_button, client_top_left):
         print('%s loading timeout' % datetime.now().strftime('%I:%M:%S'))
         fail_out()
 
-		
 # --------------- MAIN ---------------
 try:
     print('%s starting script' % datetime.now().strftime('%I:%M:%S'))
