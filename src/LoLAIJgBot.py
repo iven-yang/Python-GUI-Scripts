@@ -308,8 +308,8 @@ def champ_select(accept_button, client_top_left):
     print('%s champ select' % datetime.now().strftime('%I:%M:%S'))
     
     # Scroll down to find warwick
-    mouse_scroll(10, x=client_top_left[0]+600, y=client_top_left[0]+200)
-    pyautogui.moveTo(100, 100) # move mouse so button won't be covered
+    # mouse_scroll(10, x=client_top_left[0]+600, y=client_top_left[0]+200)
+    # pyautogui.moveTo(100, 100) # move mouse so button won't be covered
     
     # Click Warwick    
     timeout = datetime.now() + timedelta(seconds=360) # 6 min
