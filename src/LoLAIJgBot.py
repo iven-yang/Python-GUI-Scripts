@@ -41,7 +41,9 @@ def mouse_scroll(value: int, x: Optional[int] = None, y: Optional[int] = None):
         if x and y:
             MouseClick.left_click(x, x, y, y)
 
-        pyautogui.scroll(value)
+        # pyautogui.scroll(value)
+        for i in range(abs(value)):
+            pyautogui.press('down')
         # win32api.mouse_event(win32con.MOUSEEVENTF_WHEEL, x, y, value, 0)
 
 # Save a screenshot at time of failure
@@ -306,7 +308,8 @@ def champ_select(accept_button, client_top_left):
     print('%s champ select' % datetime.now().strftime('%I:%M:%S'))
     
     # Scroll down to find warwick
-    mouse_scroll(-300, x=client_top_left[0]+600, y=client_top_left[0]+200)
+    mouse_scroll(10, x=client_top_left[0]+600, y=client_top_left[0]+200)
+    pyautogui.moveTo(100, 100) # move mouse so button won't be covered
     
     # Click Warwick    
     timeout = datetime.now() + timedelta(seconds=360) # 6 min
