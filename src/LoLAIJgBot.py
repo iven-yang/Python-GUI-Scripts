@@ -215,7 +215,7 @@ def check_post_game(check_time=3) -> bool:
         recall_button = pyautogui.locateOnScreen(os.path.join(images_folder, 'recall.png'), region=(1200, 985, 100, 100), grayscale=True)
         # Also check recall button picture when dead (it's a slightly different picture)
         if recall_button is None:
-            recall_button = pyautogui.locateOnScreen(os.path.join(images_folder, 'recall_dead.png'), region=(1200, 985, 100, 100), grayscale=True)
+            recall_button = pyautogui.locateOnScreen(os.path.join(images_folder, 'recall_dead.png'), grayscale=True)
             if recall_button is None:
                 recall_button = pyautogui.locateOnScreen(os.path.join(images_folder, 'recall.png'), region=(1200, 985, 100, 100), grayscale=True)
                 if recall_button is None:
@@ -239,7 +239,7 @@ def play_again():
     
     print('%s checking for level up ok button' % datetime.now().strftime('%I:%M:%S'))
     # check to see if level up
-    timeout = datetime.now() + timedelta(seconds=10)
+    timeout = datetime.now() + timedelta(seconds=15)
     while timeout > datetime.now():
         level_up_ok_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'level_up_ok.png'))
         if level_up_ok_button is not None:
@@ -266,6 +266,7 @@ def play_again():
 
 def find_match():
     print('%s finding match' % datetime.now().strftime('%I:%M:%S'))
+    pyautogui.moveTo(100, 100) # move mouse so button won't be covered
     client_top_left = None
     
     timeout = datetime.now() + timedelta(seconds=10)
@@ -281,7 +282,7 @@ def find_match():
         fail_out()
     
     # Queue up with queue time limit of 5 min
-    timeout = datetime.now() + timedelta(seconds=300) # 5 min
+    timeout = datetime.now() + timedelta(seconds=1500) # 25 min
     while timeout > datetime.now():
         accept_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'accept.png'), region=(client_top_left[0] + 450, client_top_left[1] + 450, 400, 300))
         if accept_button is not None:
@@ -343,6 +344,7 @@ def champ_select(accept_button, client_top_left):
         print('%s loading timeout' % datetime.now().strftime('%I:%M:%S'))
         fail_out()
 
+		
 # --------------- MAIN ---------------
 try:
     print('%s starting script' % datetime.now().strftime('%I:%M:%S'))
