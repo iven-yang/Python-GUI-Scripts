@@ -32,6 +32,7 @@ Don't alt+tab or obstruct the recall button while doing a camp (script checks fo
 Don't move the client window around
 
 Known Issues:
+None as of latest version
 """
 
 images_folder = os.path.join(os.getcwd(), 'resources', 'LoL_images')
@@ -249,16 +250,20 @@ def play_again():
             break
     
     print('%s checking for level up ok button' % datetime.now().strftime('%I:%M:%S'))
-    # check to see if level up
-    timeout = datetime.now() + timedelta(seconds=15)
-    while timeout > datetime.now():
+    # check for level up and other ok button bs
+    timeout = datetime.now() + timedelta(seconds=20)
+    max_oks = 3
+	while timeout > datetime.now():
         level_up_ok_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'level_up_ok.png'))
         if level_up_ok_button is not None:
             print('%s Level Up!' % datetime.now().strftime('%I:%M:%S'))
             time.sleep(1)
             MouseClick.left_click(level_up_ok_button[0], level_up_ok_button[0], level_up_ok_button[1], level_up_ok_button[1])
-            time.sleep(4)
-            break
+            max_oks -= 1
+			time.sleep(4)
+			if max_oks==0:
+				break
+            pyautogui.moveTo(100, 100) # move mouse so buttons won't be covered
     
     print('%s checking for play again button' % datetime.now().strftime('%I:%M:%S'))
     # click play again
