@@ -20,8 +20,8 @@ from ZOSRS_Utils import empty_inventory, check_logged_in, fail_out, check_anchor
 # save as anchor.png in resources/osrs_images
 
 start = datetime.now()
-runs = randint(300, 375) # About 2-2.5 hours
-print('Runs: ', runs)
+duration = timedelta(seconds=randint(7200, 9000)) # About 2-2.5 hours
+
 time.sleep(2.5)
 print('Start Time:', start)
 
@@ -33,7 +33,7 @@ if not check_anchor(1750, 25, 160, 160, img=anchor_img):
     raise Exception('Cannot find anchor')
 try:
     invs = 0
-    while runs > 0:
+    while start + duration > datetime.now():
         if randint(1, 20) == 1:
             time.sleep(random.uniform(60, 120))
         MouseClick.left_click(920, 1020, 200, 250)
@@ -51,9 +51,8 @@ try:
             raise Exception('Client Logged Out')
         if not check_anchor(1750, 25, 160, 160, img=anchor_img):
             raise Exception('Cannot find anchor')
-        runs -= 1
 except KeyboardInterrupt:
-    print('Stopped, %s runs left\n' % runs)
+    print('Stopped by user\n')
 except Exception as e:
     print(e)
     fail_out()
