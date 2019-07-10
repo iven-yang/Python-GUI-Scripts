@@ -2,8 +2,8 @@
 import random
 import time
 
-from resources.mouse import MouseClick
 from random import randint
+from resources.mouse import MouseClick
 
 # Have at least 331 of the stuff you are alching
 # Have the stuff being alched under the bottom of the high alch spell

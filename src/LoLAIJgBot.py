@@ -215,10 +215,11 @@ def check_post_game(check_time=3) -> bool:
         recall_button = pyautogui.locateOnScreen(os.path.join(images_folder, 'recall.png'), region=(1200, 985, 100, 100), grayscale=True)
         # Also check recall button picture when dead (it's a slightly different picture)
         if recall_button is None:
-            recall_button = pyautogui.locateOnScreen(os.path.join(images_folder, 'recall_dead.png'), region=(1200, 985, 100, 100), grayscale=True)
-            if recall_button is None:
-                recall_button = pyautogui.locateOnScreen(os.path.join(images_folder, 'recall.png'), region=(1200, 985, 100, 100), grayscale=True)
-                if recall_button is None:
+            dead_recall_button = pyautogui.locateOnScreen(os.path.join(images_folder, 'recall_dead.png'), region=(1200, 985, 100, 100), grayscale=True)
+            # Also check stats button (should be the same whether dead/alive)
+            if dead_recall_button is None:
+                stats_button = pyautogui.locateOnScreen(os.path.join(images_folder, 'stats.png'), grayscale=True)
+                if stats_button is None:
                     return True
     return False
 
