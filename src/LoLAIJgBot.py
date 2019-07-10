@@ -9,6 +9,7 @@ from resources.mouse import MouseClick
 from resources.keyboard import Keyboard
 from random import randint
 from datetime import datetime, timedelta
+from typing import Optional
 
 time.sleep(2.5)
 
@@ -31,9 +32,20 @@ Don't alt+tab or obstruct the recall button while doing a camp (script checks fo
 Don't move the client window around
 
 Known Issues:
+None as of latest version
 """
 
 images_folder = os.path.join(os.getcwd(), 'resources', 'LoL_images')
+
+# Mouse scrolling
+def mouse_scroll(value: int, x: Optional[int] = None, y: Optional[int] = None):
+        if x and y:
+            MouseClick.left_click(x, x, y, y)
+
+        # pyautogui.scroll(value)
+        for i in range(abs(value)):
+            pyautogui.press('down')
+        # win32api.mouse_event(win32con.MOUSEEVENTF_WHEEL, x, y, value, 0)
 
 # Save a screenshot at time of failure
 def fail_out():
@@ -215,11 +227,10 @@ def check_post_game(check_time=3) -> bool:
         recall_button = pyautogui.locateOnScreen(os.path.join(images_folder, 'recall.png'), region=(1200, 985, 100, 100), grayscale=True)
         # Also check recall button picture when dead (it's a slightly different picture)
         if recall_button is None:
-            dead_recall_button = pyautogui.locateOnScreen(os.path.join(images_folder, 'recall_dead.png'), region=(1200, 985, 100, 100), grayscale=True)
-            # Also check stats button (should be the same whether dead/alive)
-            if dead_recall_button is None:
-                stats_button = pyautogui.locateOnScreen(os.path.join(images_folder, 'stats.png'), grayscale=True)
-                if stats_button is None:
+            recall_button = pyautogui.locateOnScreen(os.path.join(images_folder, 'recall_dead.png'), grayscale=True)
+            if recall_button is None:
+                recall_button = pyautogui.locateOnScreen(os.path.join(images_folder, 'recall.png'), region=(1200, 985, 100, 100), grayscale=True)
+                if recall_button is None:
                     return True
     return False
 
@@ -239,16 +250,20 @@ def play_again():
             break
     
     print('%s checking for level up ok button' % datetime.now().strftime('%I:%M:%S'))
-    # check to see if level up
-    timeout = datetime.now() + timedelta(seconds=10)
-    while timeout > datetime.now():
+    # check for level up and other ok button bs
+    timeout = datetime.now() + timedelta(seconds=20)
+    max_oks = 3
+	while timeout > datetime.now():
         level_up_ok_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'level_up_ok.png'))
         if level_up_ok_button is not None:
             print('%s Level Up!' % datetime.now().strftime('%I:%M:%S'))
             time.sleep(1)
             MouseClick.left_click(level_up_ok_button[0], level_up_ok_button[0], level_up_ok_button[1], level_up_ok_button[1])
-            time.sleep(4)
-            break
+            max_oks -= 1
+			time.sleep(4)
+			if max_oks==0:
+				break
+            pyautogui.moveTo(100, 100) # move mouse so buttons won't be covered
     
     print('%s checking for play again button' % datetime.now().strftime('%I:%M:%S'))
     # click play again
@@ -267,6 +282,7 @@ def play_again():
 
 def find_match():
     print('%s finding match' % datetime.now().strftime('%I:%M:%S'))
+    pyautogui.moveTo(100, 100) # move mouse so button won't be covered
     client_top_left = None
     
     timeout = datetime.now() + timedelta(seconds=10)
@@ -282,7 +298,7 @@ def find_match():
         fail_out()
     
     # Queue up with queue time limit of 5 min
-    timeout = datetime.now() + timedelta(seconds=300) # 5 min
+    timeout = datetime.now() + timedelta(seconds=1500) # 25 min
     while timeout > datetime.now():
         accept_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'accept.png'), region=(client_top_left[0] + 450, client_top_left[1] + 450, 400, 300))
         if accept_button is not None:
@@ -295,7 +311,12 @@ def find_match():
     
 def champ_select(accept_button, client_top_left):
     print('%s champ select' % datetime.now().strftime('%I:%M:%S'))
-    # Click Warwick
+    
+    # Scroll down to find warwick
+    # mouse_scroll(10, x=client_top_left[0]+600, y=client_top_left[0]+200)
+    # pyautogui.moveTo(100, 100) # move mouse so button won't be covered
+    
+    # Click Warwick    
     timeout = datetime.now() + timedelta(seconds=360) # 6 min
     while timeout > datetime.now():
         ww_button = pyautogui.locateCenterOnScreen(os.path.join(images_folder, 'warwick.png'), region=(client_top_left[0] + 340, client_top_left[1] + 130, 600, 450))
