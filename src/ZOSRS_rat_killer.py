@@ -10,8 +10,10 @@ from ZOSRS_Utils import empty_inventory, check_logged_in, fail_out, check_anchor
 
 
 # Stand with swamp shack on minimap
-# Camera zoomed out midway with max vertical angle, facing north
-# Have food matching food.png in inventory
+# Middle of lumbridge swamp with the map link icon on it on world map
+
+# Camera zoomed out midway (doesnt have to be perfect) with max vertical angle, facing north (click on compass)
+# Have food matching food.png in inventory if low def/armor
 
 start = datetime.now()
 duration = timedelta(seconds=randint(9000, 10800))  # 2.5-3 hours

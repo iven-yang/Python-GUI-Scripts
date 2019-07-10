@@ -14,6 +14,11 @@ from ZOSRS_Utils import empty_inventory, check_logged_in, fail_out, check_anchor
 # Ideally have an empty inventory, or keep items you don't want to drop in rows at top
 # About 24 sec per run
 
+# Set Anchor on screen before run (Makes sure script stops if you move unexpectedly),
+# Use MousePosition.py to figure out region on screen to search for anchor
+# a box with x, y at top left corner: check_anchor(x, y, width, height)
+# save as anchor.png in resources/osrs_images
+
 start = datetime.now()
 runs = randint(300, 375) # About 2-2.5 hours
 print('Runs: ', runs)

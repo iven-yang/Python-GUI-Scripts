@@ -44,6 +44,10 @@ def empty_inventory(rows:int):
     pyautogui.keyUp('shift')
 
 def check_logged_in():
+    """
+    
+    Makes sure user is logged in
+    """
     quest_menu_icon = pyautogui.locateOnScreen(os.path.join(images_folder, 'quest_menu_icon.png'),
                                                region=(1550, 995, 50, 50),
                                                confidence=0.9)
@@ -53,6 +57,10 @@ def check_logged_in():
         return False
 
 def check_anchor(x, y, width, height, tries=3, img='anchor.png'):
+    """
+    
+    Makes sure user does not move
+    """
     if tries==0:
         return False
     quest_menu_icon = pyautogui.locateOnScreen(os.path.join(images_folder, img),
@@ -65,6 +73,10 @@ def check_anchor(x, y, width, height, tries=3, img='anchor.png'):
         return check_anchor(x, y, width, height, tries-1)
         
 def fail_out():
+    """
+    
+    Captures failures
+    """
     failures_folder = os.path.join(os.getcwd(), 'resources', 'Failures')
     pic = pyautogui.screenshot()
     pic.save(os.path.join(failures_folder, datetime.now().strftime('%I_%M_%S') + '.png'))
